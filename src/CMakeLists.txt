@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 project(Rationals)
 
 set(Rational_SOURCES
-    )
+    Rational.cpp)
 
 add_library(Rational
     ${Rational_SOURCES})
@@ -18,4 +18,23 @@ if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
 endif()
 
 if(CMAKE_BUILD_TYPE MATCHES "Debug")
+
+find_package(GTest)
+
+if(GTEST_FOUND)
+    set(Unit_Tests_SOURCES
+        test/TestRational.cpp
+        test/Main.cpp)
+
+    add_executable(Unit_Tests
+        ${Unit_Tests_SOURCES})
+
+    include_directories(${GTEST_INCLUDE_DIRS})
+    target_link_libraries(Unit_Tests ${GTEST_BOTH_LIBRARIES} Rational)
+
+    enable_testing()
+
+    add_test(NAME UnitTests COMMAND Unit_Tests)
+endif()
+
 endif()
