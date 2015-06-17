@@ -3,9 +3,6 @@
 
 #include <cstdlib>
 
-std::vector<unsigned long> Rational::primes;
-std::mutex Rational::primesMutex;
-
 Rational::Rational() :
 numerator(0),
 denominator(1)
@@ -169,19 +166,17 @@ void Rational::checkMultiples()
 {
     unsigned long min = numerator < denominator ? numerator : denominator;
 
-    updatePrimes(min);
-
     bool changed;
     while(true)
     {
         changed = false;
-        for(int i = 1; primes.at(i) <= min; ++i)
+        for(int i = 2; i <= min; ++i)
         {
-            if(numerator % primes[i] == 0 && denominator % primes[i] == 0)
+            if(numerator % i == 0 && denominator % i == 0)
             {
                 changed = true;
-                numerator /= primes[i];
-                denominator /= primes[i];
+                numerator /= i;
+                denominator /= i;
                 min = numerator < denominator ? numerator : denominator;
                 break;
             }
@@ -202,47 +197,5 @@ void Rational::checkMultiples()
         denominator = 1L;
         negative = false;
     }
-}
-
-void Rational::updatePrimes(unsigned long limit)
-{
-    primesMutex.lock();
-    while(primes.empty() || *(primes.rbegin()) <= limit)
-    {
-        if(primes.empty())
-        {
-            primes.push_back(1);
-            primes.push_back(2);
-            primes.push_back(3);
-            primes.push_back(5);
-            primes.push_back(7);
-            primes.push_back(11);
-            primes.push_back(13);
-        }
-        else
-        {
-            unsigned long end = *(primes.rbegin());
-            bool isPrime;
-            while(true)
-            {
-                ++end;
-                isPrime = true;
-                for(int i = 1; i < primes.size(); ++i)
-                {
-                    if(end % primes[i] == 0)
-                    {
-                        isPrime = false;
-                        break;
-                    }
-                }
-                if(isPrime)
-                {
-                    primes.push_back(end);
-                    break;
-                }
-            }
-        }
-    }
-    primesMutex.unlock();
 }
 

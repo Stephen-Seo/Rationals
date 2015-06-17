@@ -30,15 +30,11 @@ public:
     bool isNegative() const;
     bool isInvalid() const;
 private:
-    static std::vector<unsigned long> primes;
-    static std::mutex primesMutex;
-
     bool negative;
     unsigned long numerator;
     unsigned long denominator;
 
     void checkMultiples();
-    void updatePrimes(unsigned long limit);
 
 };
 
