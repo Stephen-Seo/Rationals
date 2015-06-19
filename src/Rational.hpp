@@ -10,29 +10,37 @@ class Rational
 {
 public:
     Rational();
-    Rational(long value);
-    Rational(long numerator, long denominator);
-    Rational(unsigned long numerator, unsigned long denominator, bool negative);
+    Rational(long long value);
+    Rational(long long numerator, long long denominator);
+    Rational(unsigned long long numerator, unsigned long long denominator, bool negative);
+    Rational(const Rational& other);
 
+    Rational operator= (const Rational& other);
     Rational operator+ (const Rational& other) const;
     Rational operator- (const Rational& other) const;
     Rational operator* (const Rational& other) const;
     Rational operator/ (const Rational& other) const;
 
+    Rational operator+= (const Rational& other);
+    Rational operator-= (const Rational& other);
+    Rational operator*= (const Rational& other);
+    Rational operator/= (const Rational& other);
+
     int toInteger() const;
     long toLong() const;
+    long long toLLong() const;
     float toFloat() const;
     double toDouble() const;
     std::string toString() const;
 
-    unsigned long getNumerator() const;
-    unsigned long getDenominator() const;
+    unsigned long long getNumerator() const;
+    unsigned long long getDenominator() const;
     bool isNegative() const;
     bool isInvalid() const;
 private:
     bool negative;
-    unsigned long numerator;
-    unsigned long denominator;
+    unsigned long long numerator;
+    unsigned long long denominator;
 
     void checkMultiples();
 

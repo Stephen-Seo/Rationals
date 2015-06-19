@@ -59,3 +59,120 @@ TEST(RationalTest, Division)
     ASSERT_EQ("3/10", (a / Rational(2, 1)).toString());
     ASSERT_EQ("-12/35", (a / Rational(7, 4, true)).toString());
 }
+
+TEST(RationalTest, PlusEquals)
+{
+    Rational a(3, 5);
+
+    a += Rational(1, 5);
+    ASSERT_EQ("4/5", a.toString());
+
+    a += Rational(-2, 5);
+    ASSERT_EQ("2/5", a.toString());
+}
+
+TEST(RationalTest, MinusEquals)
+{
+    Rational a(3, 5);
+
+    a -= Rational(1, 5);
+    ASSERT_EQ("2/5", a.toString());
+
+    a -= Rational(2, -5);
+    ASSERT_EQ("4/5", a.toString());
+}
+
+TEST(RationalTest, TimesEquals)
+{
+    Rational a(3, 5);
+
+    a *= Rational(2, 3);
+    ASSERT_EQ("2/5", a.toString());
+
+    a *= Rational(-4, 7);
+    ASSERT_EQ("-8/35", a.toString());
+}
+
+TEST(RationalTest, DivideEquals)
+{
+    Rational a(3, 5);
+
+    a /= Rational(3, 2);
+    ASSERT_EQ("2/5", a.toString());
+
+    a /= Rational(7, -4);
+    ASSERT_EQ("-8/35", a.toString());
+}
+
+TEST(RationalTest, EqualsNumber)
+{
+    Rational a(3, 5);
+
+    a = 21;
+    ASSERT_EQ("21/1", a.toString());
+}
+
+TEST(RationalTest, PlusNumber)
+{
+    Rational a(3, 5);
+
+    a = a + 21;
+    ASSERT_EQ("108/5", a.toString());
+}
+
+TEST(RationalTest, MinusNumber)
+{
+    Rational a(3, 5);
+
+    a = a - 21;
+    ASSERT_EQ("-102/5", a.toString());
+}
+
+TEST(RationalTest, TimesNumber)
+{
+    Rational a(3, 5);
+
+    a = a * 21;
+    ASSERT_EQ("63/5", a.toString());
+}
+
+TEST(RationalTest, DivideNumber)
+{
+    Rational a(3, 5);
+
+    a = a / 21;
+    ASSERT_EQ("1/35", a.toString());
+}
+
+TEST(RationalTest, PlusEqualsNumber)
+{
+    Rational a(3, 5);
+
+    a += 21;
+    ASSERT_EQ("108/5", a.toString());
+}
+
+TEST(RationalTest, MinusEqualsNumber)
+{
+    Rational a(3, 5);
+
+    a -= 21;
+    ASSERT_EQ("-102/5", a.toString());
+}
+
+TEST(RationalTest, TimesEqualsNumber)
+{
+    Rational a(3, 5);
+
+    a *= 21;
+    ASSERT_EQ("63/5", a.toString());
+}
+
+TEST(RationalTest, DivideEqualsNumber)
+{
+    Rational a(3, 5);
+
+    a /= 21;
+    ASSERT_EQ("1/35", a.toString());
+}
+

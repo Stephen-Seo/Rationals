@@ -2,19 +2,20 @@
 #include "Rational.hpp"
 
 #include <cstdlib>
+#include <cmath>
 
 Rational::Rational() :
-numerator(0),
-denominator(1)
+numerator(0ULL),
+denominator(1ULL)
 {}
 
-Rational::Rational(long value) :
+Rational::Rational(long long value) :
 negative(value < 0),
 numerator(std::abs(value)),
-denominator(1)
+denominator(1ULL)
 {}
 
-Rational::Rational(long numerator, long denominator) :
+Rational::Rational(long long numerator, long long denominator) :
 negative((numerator < 0 && denominator >= 0) || (numerator >= 0 && denominator < 0)),
 numerator(std::abs(numerator)),
 denominator(std::abs(denominator))
@@ -22,12 +23,29 @@ denominator(std::abs(denominator))
     checkMultiples();
 }
 
-Rational::Rational(unsigned long numerator, unsigned long denominator, bool negative) :
+Rational::Rational(unsigned long long numerator, unsigned long long denominator, bool negative) :
 negative(negative),
 numerator(numerator),
 denominator(denominator)
 {
     checkMultiples();
+}
+
+Rational::Rational(const Rational& other) :
+negative(other.negative),
+numerator(other.numerator),
+denominator(other.denominator)
+{
+    checkMultiples();
+}
+
+Rational Rational::operator= (const Rational& other)
+{
+    negative = other.negative;
+    numerator = other.numerator;
+    denominator = other.denominator;
+
+    return *this;
 }
 
 Rational Rational::operator+ (const Rational& other) const
@@ -86,8 +104,8 @@ Rational Rational::operator- (const Rational& other) const
         }
         else
         {
-            unsigned long a_n = numerator * other.denominator;
-            unsigned long b_n = other.numerator * denominator;
+            unsigned long long a_n = numerator * other.denominator;
+            unsigned long long b_n = other.numerator * denominator;
             if(a_n >= b_n)
             {
                 return Rational(a_n - b_n, denominator * other.denominator, negative);
@@ -110,6 +128,34 @@ Rational Rational::operator/ (const Rational& other) const
     return *this * Rational(other.denominator, other.numerator, other.negative);
 }
 
+Rational Rational::operator+= (const Rational& other)
+{
+    *this = *this + other;
+
+    return *this;
+}
+
+Rational Rational::operator-= (const Rational& other)
+{
+    *this = *this - other;
+
+    return *this;
+}
+
+Rational Rational::operator*= (const Rational& other)
+{
+    *this = *this * other;
+
+    return *this;
+}
+
+Rational Rational::operator/= (const Rational& other)
+{
+    *this = *this / other;
+
+    return *this;
+}
+
 int Rational::toInteger() const
 {
     return (int) (numerator / denominator) * (negative ? -1 : 1);
@@ -118,6 +164,11 @@ int Rational::toInteger() const
 long Rational::toLong() const
 {
     return (long) (numerator / denominator) * (negative ? -1L : 1L);
+}
+
+long long Rational::toLLong() const
+{
+    return (long long) (numerator / denominator) * (negative ? -1LL : 1LL);
 }
 
 float Rational::toFloat() const
@@ -142,12 +193,12 @@ std::string Rational::toString() const
     }
 }
 
-unsigned long Rational::getNumerator() const
+unsigned long long Rational::getNumerator() const
 {
     return numerator;
 }
 
-unsigned long Rational::getDenominator() const
+unsigned long long Rational::getDenominator() const
 {
     return denominator;
 }
@@ -159,12 +210,12 @@ bool Rational::isNegative() const
 
 bool Rational::isInvalid() const
 {
-    return denominator == 0L;
+    return denominator == 0ULL;
 }
 
 void Rational::checkMultiples()
 {
-    unsigned long min = numerator < denominator ? numerator : denominator;
+    unsigned long long min = numerator < denominator ? numerator : denominator;
 
     bool changed;
     while(true)
@@ -187,14 +238,14 @@ void Rational::checkMultiples()
         }
     }
 
-    if(denominator == 0L)
+    if(denominator == 0ULL)
     {
-        numerator = 1L;
+        numerator = 1ULL;
         negative = false;
     }
-    else if(numerator == 0L)
+    else if(numerator == 0ULL)
     {
-        denominator = 1L;
+        denominator = 1ULL;
         negative = false;
     }
 }
