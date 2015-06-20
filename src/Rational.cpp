@@ -156,6 +156,75 @@ Rational Rational::operator/= (const Rational& other)
     return *this;
 }
 
+bool Rational::operator== (const Rational& other) const
+{
+    return negative == other.negative &&
+           numerator == other.numerator &&
+           denominator == other.denominator;
+}
+
+bool Rational::operator< (const Rational& other) const
+{
+    if(negative != other.negative)
+    {
+        return negative;
+    }
+    else if(denominator == other.denominator)
+    {
+        if(negative)
+        {
+            return numerator > other.numerator;
+        }
+        else
+        {
+            return numerator < other.numerator;
+        }
+    }
+    else
+    {
+        unsigned long long a = numerator * other.denominator;
+        unsigned long long b = other.numerator * denominator;
+
+        if(negative)
+        {
+            return a > b;
+        }
+        else
+        {
+            return a < b;
+        }
+    }
+}
+
+bool Rational::operator> (const Rational& other) const
+{
+    return other < *this;
+}
+
+bool Rational::operator<= (const Rational& other) const
+{
+    if(*this == other)
+    {
+        return true;
+    }
+    else
+    {
+        return *this < other;
+    }
+}
+
+bool Rational::operator>= (const Rational& other) const
+{
+    if(*this == other)
+    {
+        return true;
+    }
+    else
+    {
+        return other < *this;
+    }
+}
+
 int Rational::toInteger() const
 {
     return (int) (numerator / denominator) * (negative ? -1 : 1);

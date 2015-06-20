@@ -176,3 +176,83 @@ TEST(RationalTest, DivideEqualsNumber)
     ASSERT_EQ("1/35", a.toString());
 }
 
+TEST(RationalTest, EqualsEquals)
+{
+    Rational a(3, 5);
+    Rational b(15, 25);
+    Rational c(2, 5);
+
+    ASSERT_TRUE(a == b);
+    ASSERT_FALSE(a == c);
+}
+
+TEST(RationalTest, LessThan)
+{
+    Rational a(3, 5);
+    Rational b(4, 5);
+    Rational c(-1, 5);
+    Rational d(-3, 5);
+
+    ASSERT_TRUE(a < b);
+    ASSERT_TRUE(c < a);
+    ASSERT_TRUE(d < c);
+
+    ASSERT_FALSE(b < a);
+    ASSERT_FALSE(a < c);
+    ASSERT_FALSE(c < d);
+}
+
+TEST(RationalTest, GreaterThan)
+{
+    Rational a(3, 5);
+    Rational b(4, 5);
+    Rational c(-1, 5);
+    Rational d(-3, 5);
+
+    ASSERT_TRUE(b > a);
+    ASSERT_TRUE(a > c);
+    ASSERT_TRUE(c > d);
+
+    ASSERT_FALSE(a > b);
+    ASSERT_FALSE(c > a);
+    ASSERT_FALSE(d > c);
+}
+
+TEST(RationalTest, LessThanOrEquals)
+{
+    Rational a(3, 5);
+    Rational b(4, 5);
+    Rational c(-1, 5);
+    Rational d(-3, 5);
+    Rational e(-3, 5);
+
+    ASSERT_TRUE(a <= b);
+    ASSERT_TRUE(c <= a);
+    ASSERT_TRUE(d <= c);
+    ASSERT_TRUE(d <= e);
+
+    ASSERT_FALSE(b <= a);
+    ASSERT_FALSE(a <= c);
+    ASSERT_FALSE(c <= d);
+    ASSERT_TRUE(e <= d);
+}
+
+TEST(RationalTest, GreaterThanOrEquals)
+{
+    Rational a(3, 5);
+    Rational b(4, 5);
+    Rational c(-1, 5);
+    Rational d(-3, 5);
+    Rational e(-3, 5);
+
+    ASSERT_TRUE(b >= a);
+    ASSERT_TRUE(a >= c);
+    ASSERT_TRUE(c >= d);
+    ASSERT_TRUE(d >= e);
+
+    ASSERT_FALSE(a >= b);
+    ASSERT_FALSE(c >= a);
+    ASSERT_FALSE(d >= c);
+    ASSERT_TRUE(e >= d);
+}
+

@@ -26,6 +26,12 @@ public:
     Rational operator*= (const Rational& other);
     Rational operator/= (const Rational& other);
 
+    bool operator== (const Rational& other) const;
+    bool operator< (const Rational& other) const;
+    bool operator> (const Rational& other) const;
+    bool operator<= (const Rational& other) const;
+    bool operator>= (const Rational& other) const;
+
     int toInteger() const;
     long toLong() const;
     long long toLLong() const;
